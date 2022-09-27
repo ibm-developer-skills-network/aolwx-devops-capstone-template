@@ -1,0 +1,40 @@
+---
+# Python 3 with PostgreSQL
+version: "3"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    hostname: theia
+    container_name: capstone-project
+    volumes:
+      - ..:/app
+    command: sleep infinity
+    environment:
+      FLASK_APP: service:app
+      FLASK_ENV: development
+      GUNICORN_BIND: "0.0.0.0:8000"
+      DATABASE_URI: postgresql://postgres:s3cr3t1me@postgres:5432/postgres
+    networks:
+      - dev
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:alpine
+    # ports:
+    #   - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: s3cr3t1me
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - dev
+
+volumes:
+  postgres:
+
+networks:
+  dev:
