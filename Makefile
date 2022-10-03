@@ -7,11 +7,11 @@ all: help
 
 venv: ## Create a Python virtual environment
 	$(info Creating Python 3 virtual environment...)
-	python3 -m venv .venv
+	python3 -m venv venv
 
 install: ## Install Python dependencies
 	$(info Installing dependencies...)
-	sudo pip install -r requirements.txt
+	pip install -r requirements.txt
 
 lint: ## Run the linter
 	$(info Running linting...)
@@ -21,16 +21,19 @@ lint: ## Run the linter
 
 test: ## Run the unit tests
 	$(info Running tests...)
-	nosetests --with-spec --spec-color
+	nosetests -vv --with-spec --spec-color --with-coverage --cover-package=service
 
 run: ## Run the service
 	$(info Starting service...)
 	honcho start
 
-postgres: ## Run PostgreSQL in Docker
+dbrm: ## Stop and remove PostgreSQL in Docker
+	$(info Stopping and removing PostgreSQL...)
+	docker stop postgres
+	docker rm postgres
+
+db: ## Run PostgreSQL in Docker
 	$(info Running PostgreSQL...)
-	- docker stop postgres
-	- docker rm postgres
 	docker run -d --name postgres -p 5432:5432 \
 		-e POSTGRES_PASSWORD=postgres \
 		-v postgres:/var/lib/postgresql/data \
