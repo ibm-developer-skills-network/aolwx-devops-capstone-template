@@ -25,20 +25,23 @@ echo "Checking the Python version..."
 python3 --version
 
 echo "Creating a Python virtual environment"
-python3 -m venv venv
+python3 -m venv ~/venv
+echo ". ~/venv/bin/activate" >> ~/.bashrc
 
 echo "Changing the bash prompt..."
 export PS1="\[\e]0;\u:\W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
+echo 'export PS1="\[\e]0;\u:\W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "' >> ~/.bashrc
 
 echo "Activating virtual environment..."
-source venv/bin/activate
+source ~/venv/bin/activate
+
+echo "Installing Python depenencies..."
+make install
+
+echo "Starting the Postgres Docker container..."
+make db
 
 echo "****************************************"
 echo " Capstone Environment Setup Complete"
 echo "****************************************"
 echo ""
-echo "Use:"
-echo ""
-echo "  source venv/bin/activate"
-echo ""
-echo "to activate the Python virtual envronment"
