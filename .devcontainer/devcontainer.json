@@ -1,14 +1,19 @@
 // spell: disable
 {
-	"name": "Python 3 & PostgeSQL",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
-	"workspaceFolder": "/app",
-	"remoteUser": "vscode",
+	"name": "Cloud IDE",
+	"dockerFile": "Dockerfile",
+	"context": "..",
+	"remoteUser": "theia",
+	"workspaceFolder": "/project",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind,consistency=delegated",
+    "runArgs": ["-h","theia", "--name", "capstone-project"],
+    "remoteEnv": {
+      "FLASK_ENV": "development"
+    },
 	"extensions": [
 		"VisualStudioExptTeam.vscodeintellicode",
 		"ms-python.python",
-        "ms-python.pylint",
+		"ms-python.pylint",
 		"ms-python.vscode-pylance",
 		"alexkrechik.cucumberautocomplete",
 		"cstrap.flask-snippets",
@@ -22,10 +27,9 @@
 		"LittleFoxTeam.vscode-python-test-adapter",
 		"njpwerner.autodocstring",
 		"redhat.vscode-yaml",
-		"rangav.vscode-thunder-client",
 		"streetsidesoftware.code-spell-checker",
-		"wholroyd.jinja"
+		"wholroyd.jinja",
+		"rangav.vscode-thunder-client"
 	],
-	//"forwardPorts": [8000],
-	"postCreateCommand": "sudo pip install -r requirements.txt"
+	// "postCreateCommand": "sudo pip install -r requirements.txt",
 }

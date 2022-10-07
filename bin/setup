@@ -1,8 +1,14 @@
-#!/bin/bash
+# DO NOT run this program as a bash script
+# It sets environment variable and so must be sourced
+#
+# Usage:
+#     source bin/setup
+#
 
 echo "****************************************"
 echo " Setting up Capstone Environment"
 echo "****************************************"
+export DEBIAN_FRONTEND=noninteractive
 
 echo "Updating package manager..."
 sudo add-apt-repository -y ppa:deadsnakes/ppa
@@ -20,6 +26,12 @@ python3 --version
 
 echo "Creating a Python virtual environment"
 python3 -m venv venv
+
+echo "Changing the bash prompt..."
+export PS1="\[\e]0;\u:\W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
+
+echo "Activating virtual environment..."
+source venv/bin/activate
 
 echo "****************************************"
 echo " Capstone Environment Setup Complete"

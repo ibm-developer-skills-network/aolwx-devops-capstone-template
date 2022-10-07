@@ -1,14 +1,23 @@
-# Image for a Python 3 development environment
-FROM python:3.9-slim
+# The Cloud IDE uses Ubuntu 18.04 :(
+FROM ubuntu:18.04
 
-# Add any tools that are needed beyond Python 3.9
+# Add any tools that are needed
 RUN apt-get update && \
-    apt-get install -y sudo vim make git zip tree curl wget jq && \
-    apt-get autoremove -y && \
-    apt-get clean -y
+    apt-get install -y sudo \
+        vim \
+        make \
+        git \
+        zip \
+        tree \
+        curl \
+        wget \
+        jq \
+        software-properties-common \
+        python3-pip \
+        python3-dev
 
 # Create a user for development
-ARG USERNAME=vscode
+ARG USERNAME=theia
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
@@ -20,8 +29,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Set up the Python development environment
-WORKDIR /app
-RUN python -m pip install --upgrade pip wheel
+WORKDIR /project
+RUN python3 -m pip install --upgrade pip wheel
 
 ENV PORT 8000
 EXPOSE $PORT

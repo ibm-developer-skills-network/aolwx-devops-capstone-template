@@ -15,6 +15,20 @@ Do Not fork this code! It is meant to be used by pressing the  <span style=color
 
 These labs are designed to be executed in the IBM Developer Skills Network Cloud IDE with OpenShift. Please use the links provided in the Coursera Capstone project to access the lab environment.
 
+Once you are in the lab environment, you can initialize it with `bin/setup` by sourcing it. (*Note: DO NOT run this program as a bash script. It sets environment variable and so must be sourced*):
+
+```bash
+source bin/setup
+```
+
+This will install Python 3.9, make it the default, modify the bash prompt, create a Python virtual environment and activate it.
+
+After sourcing it you prompt should look like this:
+
+```bash
+(venv) theia:project$
+```
+
 ## Project layout
 
 The code for the microservice is contained in the `service` package. All of the test are in the `tests` folder. The code follows the **Model-View-Controller** pattern with all of the database code and business logic in the model (`models.py`), and all of the RESTful routing on the controller (`routes.py`).
