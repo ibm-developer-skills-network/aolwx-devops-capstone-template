@@ -58,13 +58,13 @@ class TestAccountService(TestCase):
         accounts = []
         for _ in range(count):
             account = AccountFactory()
-            resp = self.client.post(BASE_URL, json=account.serialize())
+            response = self.client.post(BASE_URL, json=account.serialize())
             self.assertEqual(
-                resp.status_code,
+                response.status_code,
                 status.HTTP_201_CREATED,
                 "Could not create test Account",
             )
-            new_account = resp.get_json()
+            new_account = response.get_json()
             account.id = new_account["id"]
             accounts.append(account)
         return accounts
@@ -75,23 +75,25 @@ class TestAccountService(TestCase):
 
     def test_index(self):
         """It should get 200_OK from the Home Page"""
-        resp = self.client.get("/")
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_account(self):
         """It should Create a new Account"""
         account = AccountFactory()
-        resp = self.client.post(
-            BASE_URL, json=account.serialize(), content_type="application/json"
+        response = self.client.post(
+            BASE_URL,
+            json=account.serialize(),
+            content_type="application/json"
         )
-        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # Make sure location header is set
-        location = resp.headers.get("Location", None)
+        location = response.headers.get("Location", None)
         self.assertIsNotNone(location)
 
         # Check the data is correct
-        new_account = resp.get_json()
+        new_account = response.get_json()
         self.assertEqual(new_account["name"], account.name)
         self.assertEqual(new_account["email"], account.email)
         self.assertEqual(new_account["address"], account.address)
@@ -100,15 +102,17 @@ class TestAccountService(TestCase):
 
     def test_bad_request(self):
         """It should not Create an Account when sending the wrong data"""
-        resp = self.client.post(BASE_URL, json={"name": "not enough data"})
-        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
+        response = self.client.post(BASE_URL, json={"name": "not enough data"})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_unsupported_media_type(self):
         """It should not Create an Account when sending the wrong media type"""
         account = AccountFactory()
-        resp = self.client.post(
-            BASE_URL, json=account.serialize(), content_type="test/html"
+        response = self.client.post(
+            BASE_URL,
+            json=account.serialize(),
+            content_type="test/html"
         )
-        self.assertEqual(resp.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+        self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     # ADD YOUR TEST CASES HERE ...
