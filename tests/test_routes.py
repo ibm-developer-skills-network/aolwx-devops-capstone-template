@@ -78,6 +78,13 @@ class TestAccountService(TestCase):
         response = self.client.get("/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_health(self):
+        """It should be healthy"""
+        resp = self.client.get("/health")
+        self.assertEqual(resp.status_code, 200)
+        data = resp.get_json()
+        self.assertEqual(data["status"], "OK")
+
     def test_create_account(self):
         """It should Create a new Account"""
         account = AccountFactory()
