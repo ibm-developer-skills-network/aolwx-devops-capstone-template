@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pipelinerun-pvc
+  name: postgres-storage
 spec:
   storageClassName: skills-network-learner
   resources:
@@ -9,4 +9,4 @@ spec:
       storage:  1Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce

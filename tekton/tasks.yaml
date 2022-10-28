@@ -3,6 +3,7 @@ kind: Task
 metadata:
   name: echo
 spec:
+  description: This task will echo the message.
   params:
     - name: message
       description: The message to echo
