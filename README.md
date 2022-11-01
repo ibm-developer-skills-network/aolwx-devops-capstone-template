@@ -94,6 +94,34 @@ The Account model contains the following fields:
 
 Complete this microservice by implementing REST API's for `READ`, `UPDATE`, `DELETE`, and `LIST` while maintaining **95%** code coverage. In true **Test Driven Development** fashion, first write tests for the code you "wish you had", and then write the code to make them pass.
 
+## Local Kubernetes Development
+
+This repo can also be used for local Kubernetes development. It is not advised that you run these commands in the Cloud IDE environment. The purpose of these commands are to simulate the Cloud IDE environment locally on your computer. 
+
+At a minimum, you will need [Docker Desktop](https://www.docker.com/products/docker-desktop) installed on your computer. For the full development environment, you will also need [Visual Studio Code](https://code.visualstudio.com) with the [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension from the Visual Studio Marketplace. All of these can be installed manually by clicking on the links above or you can use a package manager like **Homebrew** on Mac of **Chocolatey** on Windows.
+
+Please only use these commands for working stand-alone on your own computer with the VSCode Remote Container environment provided.
+
+1. Bring up a local K3D Kubernetes cluster
+
+    ```bash
+    $ make cluster
+    ```
+
+2. Install Tekton
+
+    ```bash
+    $ make tekton
+    ```
+
+3. Install the ClusterTasks that the Cloud IDE has
+
+    ```bash
+    $ make clustertasks
+    ```
+
+You can now perform Tekton development locally, just like in the Cloud IDE lab environment.
+
 ## Author
 
 [John Rofrano](https://www.coursera.org/instructor/johnrofrano), Senior Technical Staff Member, DevOps Champion, @ IBM Research, and Instructor @ Coursera
@@ -102,4 +130,4 @@ Complete this microservice by implementing REST API's for `READ`, `UPDATE`, `DEL
 
 Licensed under the Apache License. See [LICENSE](LICENSE)
 
-## <h3 align="center"> © IBM Corporation 2022. All rights reserved. <h3/>.
+## <h3 align="center"> © IBM Corporation 2022. All rights reserved. <h3/>

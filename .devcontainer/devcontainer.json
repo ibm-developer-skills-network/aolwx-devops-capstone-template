@@ -5,7 +5,7 @@
 	"context": "..",
 	"remoteUser": "theia",
 	"workspaceFolder": "/project",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/project,type=bind,consistency=delegated",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/project,type=bind,consistency=delegated",
     "runArgs": ["-h","theia", "--name", "capstone-project"],
     "remoteEnv": {
       "FLASK_ENV": "development"
