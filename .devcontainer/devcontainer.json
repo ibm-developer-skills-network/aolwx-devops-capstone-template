@@ -8,7 +8,7 @@
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/project,type=bind,consistency=delegated",
     "runArgs": ["-h","theia", "--name", "capstone-project"],
     "remoteEnv": {
-      "FLASK_ENV": "development"
+      "FLASK_DEBUG": "True"
     },
 	"extensions": [
 		"VisualStudioExptTeam.vscodeintellicode",

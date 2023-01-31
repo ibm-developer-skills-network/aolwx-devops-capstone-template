@@ -27,7 +27,7 @@ clustertasks: ## Create Tekton Cluster Tasks
 .PHONY: build
 build: ## Build a Docker image
 	$(info Building Docker image...)
-	docker build --rm -t accounts:1.0 . 
+	docker build --rm --pull --tag accounts:1.0 . 
 
 .PHONY: push
 push: ## Push image to K3d registry
