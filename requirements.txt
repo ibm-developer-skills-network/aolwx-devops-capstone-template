@@ -1,6 +1,5 @@
 # Pin dependancies that might cause breakage
 Werkzeug==2.2.2
-SQLAlchemy==2.0.0
 
 # Build dependencies
 Flask==2.2.2
