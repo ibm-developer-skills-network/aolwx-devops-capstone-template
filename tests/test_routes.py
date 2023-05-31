@@ -86,6 +86,27 @@ class TestAccountService(TestCase):
         data = resp.get_json()
         self.assertEqual(data["status"], "OK")
 
+    def test_bad_request(self):
+        """It should not Create an Account when sending the wrong data"""
+        response = self.client.post(BASE_URL, json={"name": "not enough data"})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_unsupported_media_type(self):
+        """It should not Create an Account when sending the wrong media type"""
+        account = AccountFactory()
+        response = self.client.post(
+            BASE_URL,
+            json=account.serialize(),
+            content_type="test/html"
+        )
+        self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+
+    # ADD YOUR TEST CASES HERE ...
+    def test_list_account(self):
+        """It should List all accounts"""
+        response = self.client.get(BASE_URL)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     def test_create_account(self):
         """It should Create a new Account"""
         account = AccountFactory()
@@ -108,19 +129,31 @@ class TestAccountService(TestCase):
         self.assertEqual(new_account["phone_number"], account.phone_number)
         self.assertEqual(new_account["date_joined"], str(account.date_joined))
 
-    def test_bad_request(self):
-        """It should not Create an Account when sending the wrong data"""
-        response = self.client.post(BASE_URL, json={"name": "not enough data"})
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    def test_read_account(self):
+        """It should Get Account with id 12"""
+        url = BASE_URL + "/12"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_unsupported_media_type(self):
-        """It should not Create an Account when sending the wrong media type"""
+    def test_update_account(self):
+        """It should Update Account"""
+        url = BASE_URL + "/15"
         account = AccountFactory()
-        response = self.client.post(
-            BASE_URL,
+        account.id = "15"
+        account.name = "Name Updates"
+        response = self.client.put(
+            url,
             json=account.serialize(),
-            content_type="test/html"
-        )
-        self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+            content_type="application/json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK) 
 
-    # ADD YOUR TEST CASES HERE ...
+    def test_delete_account(self):
+        """It should Delete Account"""  
+        url = BASE_URL + "/16"
+        account = AccountFactory()
+        account.id = "16"
+        response = self.client.delete(
+            url,
+            json=account.serialize(),
+            content_type="application/json")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT) 
